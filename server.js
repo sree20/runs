@@ -4,6 +4,9 @@ var app = express(); // create application variable
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 var PORT = process.env.PORT || 3000;
+
+app.use(express.static('public'));
+
 var fakeArray = require('./models/fakearray.js');
 console.log(fakeArray);
 
