@@ -4,7 +4,13 @@ var controller = express.Router();
 var  runs = require('../models/runs.js')
 
 controller.get('/',function(req,res){
-  res.json(runs);
+  runs.findAll({
+
+  }).then(function(foundRuns){
+    //an array of run objects that represent rows in the db
+    res.json(foundRuns);
+});
+//  res.json(runs);
 //  console.log(req.query);
 //  console.log(req.query['foo']);
 //  res.send("inside run controller");
