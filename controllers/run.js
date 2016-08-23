@@ -24,9 +24,7 @@ for(var i=0 ; i< runs.length ;i++){
 });
 
 controller.post('/',function(req,res){
-  runs.create({ date:new Date('2016-1-1'),
-                distance :5.5
-  }).then(function(createdRun){
+  runs.create(req.body).then(function(createdRun){
     res.json(createdRun);
   });
   //runs.push(req.body);
