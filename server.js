@@ -1,19 +1,14 @@
 var express = require('express'); // require express package
 var app = express(); // create application variable
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 var PORT = process.env.PORT || 3000;
 var fakeArray = require('./models/fakearray.js');
 console.log(fakeArray);
-app.use(function(req,res,next){
-  console.log('middleware 1');
-  next();
-});
-app.use(function(req,res,next){
-  console.log('middleware 2');
-  next();
-});
-app.get('/foo',function(req,res){
-  res.send('works');
-});
+
+var runController = require('./controllers/run.js');
+app.use('/runs',runController);
 app.get('/',function(request,response){
 //  response.send('hi hello world!!!');
 response.render('index.ejs',{dataArray:fakeArray});
