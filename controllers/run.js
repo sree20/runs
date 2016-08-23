@@ -39,8 +39,13 @@ controller.post('/',function(req,res){
 });
 
 controller.delete('/:id',function(req,res){
-  runs.splice(req.params.id,1);
-  res.json(runs);
+  runs.destroy({
+    where: { id : req.params.id }
+  }).then(function(didSucceed){
+    res.json(didSucceed); //send back if it succeeded
+});
+//  runs.splice(req.params.id,1);
+//  res.json(runs);
 });
 controller.put('/:id',function(req,res){
   runs[req.params.id] = req.body;
