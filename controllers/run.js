@@ -24,9 +24,14 @@ for(var i=0 ; i< runs.length ;i++){
 });
 
 controller.post('/',function(req,res){
-  runs.push(req.body);
-  console.log(req.body);
-  res.json(runs);
+  runs.create({ date:new Date('2016-1-1'),
+                distance :5.5
+  }).then(function(createdRun){
+    res.json(createdRun);
+  });
+  //runs.push(req.body);
+//  console.log(req.body);
+//  res.json(runs);
 });
 
 controller.delete('/:id',function(req,res){
