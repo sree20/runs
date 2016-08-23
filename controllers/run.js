@@ -17,15 +17,18 @@ controller.get('/',function(req,res){
 });
 controller.get('/:id',function(req,res){
 
-console.log("start runs");
+runs.findById(req.params.id).then(function(foundRuns){
+  res.json(foundRuns);
+});
+//console.log("start runs");
 
-for(var i=0 ; i< runs.length ;i++){
-  var vr = runs[i];
-  console.log(vr);
-  if(vr.id == req.params.id){
-    res.json(vr);
-  }
-}
+//for(var i=0 ; i< runs.length ;i++){
+//  var vr = runs[i];
+//  console.log(vr);
+//  if(vr.id == req.params.id){
+//    res.json(vr);
+//  }
+//}
     //res.send("inside run controller" + req.params.id);
 });
 
