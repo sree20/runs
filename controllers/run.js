@@ -51,7 +51,10 @@ controller.delete('/:id',function(req,res){
 //  res.json(runs);
 });
 controller.put('/:id',function(req,res){
-  runs[req.params.id] = req.body;
-  res.json(runs);
+  runs.update(req.body,{where :{id:req.params.id}}).then(function(didSucceed){
+    res.json(didSucceed);
+  });
+  //runs[req.params.id] = req.body;
+  //res.json(runs);
 });
 module.exports = controller;
