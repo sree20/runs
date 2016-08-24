@@ -1,0 +1,11 @@
+html, body {
+  margin: 2;
+  padding: 0;
+  height: 100%;
+}
+svg {
+  width: 100%;
+  height:calc(100% - 10em);
+  border: 1px solid black;
+  box-sizing: border-box;
+}

@@ -1,0 +1,22 @@
+body{
+
+  padding:0 2em;
+}
+
+
+svg {
+
+  overflow:visible
+}
+
+circle {
+  r:5;
+  fill:black;
+  transition: r linear 0.5s , fill linear 0.2s;
+}
+
+circle:hover {
+
+  r:20;
+  fill:blue;
+}
