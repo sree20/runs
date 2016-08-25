@@ -7,7 +7,7 @@ d3.select('svg')
 .attr('width',WIDTH)
 .attr('height',HEIGHT);
 
-
+var lastTransform = null;
 var yScale = d3.scaleLinear();
 var xScale = d3.scaleTime();
 
@@ -25,14 +25,14 @@ console.log("Xscale Values")
 console.log(xScale(new Date('2016-2-1')));
 
 var leftAxis = d3.axisLeft(yScale);
-d3.select('svg').append('g').call(leftAxis);
+d3.select('svg').append('g').attr('id',"y-axis").call(leftAxis);
 
 var bottomAxis = d3.axisBottom(xScale);
-d3.select('svg').append('g').attr('transform','translate(0,' + HEIGHT + ')').call(bottomAxis);
+d3.select('svg').append('g').attr('id',"x-axis").attr('transform','translate(0,' + HEIGHT + ')').call(bottomAxis);
 
 var render = function(){
   d3.json('/runs',function(error,data){
-    var circles =   d3.select('svg').selectAll('circle').data(data,function(d){
+    var circles =   d3.select('#points').selectAll('circle').data(data,function(d){
       return d.id;
     });
 
@@ -91,10 +91,32 @@ var dragBehaviour = d3.drag().on('start',dragStart)
 
 };
 render();
+
+
+var zoomCallback = function(){
+  lastTransform = d3.event.transform;
+  d3.select('#points').attr("transform",d3.event.transform);
+  d3.select('#x-axis').call(bottomAxis.scale(d3.event.transform.rescaleX(xScale)));
+      d3.select('#y-axis').call(leftAxis.scale(d3.event.transform.rescaleY(yScale)));
+
+}
+var zoom = d3.zoom().on('zoom',zoomCallback);
+d3.select('svg').call(zoom);
+
+
 d3.select('svg').on('click',function(){
   console.log(d3.event);
-  var distance = yScale.invert(d3.event.offsetY);
-  var date = xScale.invert(d3.event.offsetX);
+ var x = d3.event.offsetX;
+ var y = d3.event.offsetY;
+
+if(lastTransform !== null){
+  x = lastTransform.invertX(d3.event.offsetX);
+  y = lastTransform.invertY(d3.event.offsetY);
+}
+
+
+  var distance = yScale.invert(y);
+  var date = xScale.invert(x);
   console.log('distance:'+ distance + 'date:'+ date);
 var runObject = {
                   distance: distance,
